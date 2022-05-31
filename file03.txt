@@ -1,0 +1,235 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    public static final int NUMBER_OF_SEATS = 42;
+    public static final String AVAILABLE = "AVAILABLE";
+
+    public static void bookSeat(String[] seatArray,String customerName,int[] selectedSeatsIntArray){
+        for(int  seatNumber : selectedSeatsIntArray){
+            //checking if the given seat is already booked
+            int seatIndex = seatNumber - 1;
+            if (seatArray[seatIndex] != null) {
+                System.out.println("Selected seat "+seatNumber+" is already booked!!");
+            }
+            else{
+                seatArray[seatIndex] = customerName;
+                System.out.println("Successfully booked "+seatNumber+"for" + customerName);
+                System.out.println("");
+            }
+        }
+    }
+
+    public static void viewAllSeats(String[] seatArray) {
+        for (int i = 0; i < seatArray.length; i++) {
+            int seatNumber = i+1;
+            String customer = seatArray[i] != null ? seatArray[i] : AVAILABLE;
+            System.out.println(seatNumber+" : "+customer);
+            System.out.println("");
+        }
+    }
+
+    public static void displayEmptySeatList(String[] seatArray){
+        for (int i = 0 ;i<seatArray.length ;i++ ) {
+            if (seatArray[i] == null) {
+                System.out.print(i+1+" ");
+            }
+        }
+        System.out.println();
+    }
+
+    public static void deleteBooking(String[] seatArray,String customerName){
+        for(int i = 0;i<seatArray.length; i++){
+            if (seatArray[i] != null && customerName.equalsIgnoreCase(seatArray[i])) {
+                seatArray[i] = null;
+                System.out.println("Removed booking for seat "+(i+1)+" by "+customerName);
+            }
+        }
+    }
+
+    public static void displayCustomerBookedSeats(String[] seatArray,String customerName){
+        for (int i = 0;i<seatArray.length ;i++ ) {
+            if (seatArray[i] != null && customerName.equalsIgnoreCase(seatArray[i])) {
+                System.out.println(i+1+" ");
+            }
+        }
+    }
+
+    public static void saveBookingDetailsToFile(String[] seatArray){
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\HP\\Desktop\\bookings.txt"));
+            for (int i = 0; i < seatArray.length; i++) {
+                int seatNumber = i+1;
+                String customer = seatArray[i] != null ? seatArray[i] : AVAILABLE;
+                writer.write(seatNumber+" : "+customer);
+                writer.newLine();
+            }
+            writer.flush();
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void loadSaveBookingDetailsFromFile(String fileName,String[] seatArray){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("C:\\Users\\HP\\Desktop\\bookings.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split("  ");
+                int seatIndex = Integer.parseInt(data[0]) - 1;
+                String customer = AVAILABLE.equalsIgnoreCase(data[1]) ? null : data[1];
+                seatArray[seatIndex] = customer;
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void SortNamesAlphabeticalOrder(String[] seatArray){
+        String temp;
+        for (int i = 0;i < seatArray.length ;i++ ) {
+
+            for (int j = i + 1 ;j < seatArray.length; j++ ) {
+
+                if (seatArray[i].compareTo(seatArray[j])>0) {
+                    temp = seatArray[i];
+                    seatArray[i] = seatArray[j];
+                    seatArray[j] = temp;
+                }
+            }
+        }
+        System.out.print("Name in sorted order: ");
+        for (int i = 0;i<seatArray.length - 1 ;i++ ) {
+            System.out.println(seatArray[i] + ",");
+        }
+        System.out.println(seatArray[seatArray.length - 1]);
+
+    }
+
+    public static void quit(){
+        System.out.println("You are quitting the program");
+        System.exit(0);
+    }
+
+    public static void bookingProgram(String[] seatArrayColomboToBadulla, String[] seatArrayBadullaToColombo) throws IOException{
+        Scanner input = new Scanner(System.in);
+        String[] seatArray = null;
+        System.out.println("Select train: \nEnter C to 'Colombo to Badulla'\nEnter B to 'Badulla to Colombo'");
+        String train = input.nextLine().toUpperCase();
+        System.out.println(" ");
+        switch(train) {
+            case("C"):
+                seatArray = seatArrayColomboToBadulla;
+                break;
+            case("B"):
+                seatArray = seatArrayBadullaToColombo;
+
+                break;
+            default:
+                System.out.println("Please enter a valid train!!!");
+                return;
+        }
+
+        System.out.println("Enter 'A' to add seat");
+        System.out.println("Enter 'V' to view all seats");
+        System.out.println ("Enter 'E' to display empty seat");
+        System.out.println("Enter 'D' for delete seat");
+        System.out.println("Enter 'F' to find the seat a given customer name");
+        System.out.println("Enter O to view eats ordered alphabetically by name");
+        System.out.println("Enter 'S' to save input in txt file");
+        System.out.println("Enter 'L' to load customer's save data");
+        System.out.println("Enter 'Q' to quit the program");
+        System.out.println(" ");
+        System.out.print("Enter your option: ");
+
+        String customerInput = input.nextLine().toUpperCase();
+
+        switch(customerInput){
+            case("A"):
+                System.out.println("Enter your name: ");
+                String customerName = input.nextLine();
+
+                System.out.println("Select seats form the following empty seats:");
+                displayEmptySeatList(seatArray);
+
+                System.out.println("Enter seat numbers of the above empty seat list you want and use the space to separated seats:");
+                String selectedSeats = input.nextLine();
+
+                String[] selectedSeatsArray = selectedSeats.split(" ");
+                int[] selectedSeatsIntArray = new int[selectedSeatsArray.length];
+
+                for (int i = 0; i< selectedSeatsArray.length ;i++ ) {
+                    selectedSeatsIntArray[i] = Integer.parseInt(selectedSeatsArray[i]);
+                }
+                bookSeat(seatArray,customerName,selectedSeatsIntArray);
+                break;
+
+            case("E"):
+                System.out.println("Displaying empty seats :");
+                displayEmptySeatList(seatArray);
+                System.out.println();
+                break;
+
+            case("D"):
+
+                System.out.print("Enter your name: ");
+                customerName = input.nextLine();
+                deleteBooking(seatArray,customerName);
+                System.out.println();
+                break;
+
+            case("F"):
+                System.out.print("Enter your name to find the seats you already booked: ");
+                customerName = input.nextLine();
+                displayCustomerBookedSeats(seatArray,customerName);
+                System.out.println();
+                break;
+
+            case("V"):
+                viewAllSeats(seatArray);
+                break;
+
+            case("O"):
+                SortNamesAlphabeticalOrder(seatArray);
+                System.out.println();
+                break;
+
+            case("Q"):
+                quit();
+                break;
+
+            case("S"):
+                saveBookingDetailsToFile(seatArray);
+                System.out.println();
+                break;
+
+            case("L"):
+                loadSaveBookingDetailsFromFile("bookings.txt",seatArray);
+                System.out.println();
+                break;
+
+            default:
+                System.out.println("Invalid Option!!!");
+                System.out.println();
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        System.out.println("===================================  Seat Booking System  ===================================");
+        System.out.println();
+
+        String[] seatArrayColomboToBadulla = new String[NUMBER_OF_SEATS];
+        String[] seatArrayBadullaToColombo = new String[NUMBER_OF_SEATS];
+
+        while(true) {
+            bookingProgram(seatArrayColomboToBadulla, seatArrayBadullaToColombo);
+        }
+    }
+}
