@@ -1,0 +1,41 @@
+Train seat booking program.
+
+Add the new line 1 after creted develop branch.
+Add the new line 2 after creted develop branch.
+Add the new line 3 after creted develop branch.
+Add the new line 4 after creted develop branch.
+Add the new line 5 after creted develop branch.
+Add the new line 6 after creted develop branch. 
+
+Design and implement a menu driven program for booking seats on a Train with 42 seats in
+the A/C Compartment in Denuwara Menike train to Badulla [To understand better how reservation
+takes place you may have to carryout an investigation on your own]. You will need to adhere to good
+programming style and conventions, for example, avoid magic numbers in your code by declaring a
+global constant (final) to represent the number of seats for your Train.
+static final int SEATING_CAPACITY = 42;
+All other variables must be local. Pass variables as parameters if they are needed in other methods.
+Use good naming conventions for your variables and methods, and add suitable comments.
+The Train’s seating will be represented by a suitable data structure of your choice
+Once the basic code runs then add code to ‘Views All seats’ and ‘Add customer to seat’ into separate
+methods, and test it works. You can build up your test cases as you develop your program (see 2
+below).
+
+Then add a menu system (console) which will allow the user to choose what they want to select.
+Enter an ‘A’ to add a customer to a seat (customer should be able to select an empty seat and add a
+passenger to that seat using GUI component that is called from console), and a ‘V’ to view all seats
+(visualize all the seat using an GUI component and use separate color for booked and available
+seats). Ensure that all menu options call a separate method to execute the option. When an ‘A’ is
+pressed it should call the Add method, a ‘V’ should call the View method.
+One by one, add extra methods to do each of the following menu options (Menu should be displayed
+in Console). The user should be able to choose from the menu what the program does, until they
+enter ‘Q’ which should quit the program.
+E: Display Empty seats (when “E” is pressed in console invoke GUI component)
+D: Delete customer from seat (Console)
+F: Find the seat for a given customers name (Console)
+S: Store program data in to file (Store the booking details stored in the data structure to file)
+L: Load program data from file (load the booking details from file to data structure)
+O: View seats Ordered alphabetically by name. (Using the sort algorithm DO NOT USE built in
+function in java)
+For “S” and “L” options additional marks will be given if database is used specifically
+NoSQL (Bonus +10). But DO NOT USE database retrieval or storage code in any other
+functionality such as A, V, E, D, F and O that will result in ZERO.
