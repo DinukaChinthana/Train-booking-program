@@ -6,6 +6,7 @@ Add the new line 3 after creted develop branch.
 Add the new line 4 after creted develop branch.
 Add the new line 5 after creted develop branch.
 Add the new line 6 after creted develop branch. 
+Add the new line 7 after creted develop branch.
 
 Design and implement a menu driven program for booking seats on a Train with 42 seats in
 the A/C Compartment in Denuwara Menike train to Badulla [To understand better how reservation
